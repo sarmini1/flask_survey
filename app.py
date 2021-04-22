@@ -32,6 +32,23 @@ def redirect_to_question():
 
 @app.route("/questions/{len(responses)}")
 def show_question():
+    if len(responses) < len(survey.questions):
+        current_question = survey.questions[len(responses)]
+        return render_template("question.html", 
+                                question = current_question, 
+                                choices = current_question.choices)
+    else:
+        return redirect("/completion")
 
-    current_question = survey.questions[len(responses)]
-    return render_template("question.html", question = current_question, choices = current_question.choices)
+
+
+@app.route("/answer", methods=["POST"])
+def store_answer():
+    #breakpoint()
+    responses.append(request.form["answer"])
+    return redirect("/questions/{len(responses)}")
+    
+
+@app.route("/completion")
+def say_thanks():
+    return render_template("completion.html")

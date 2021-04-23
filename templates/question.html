@@ -5,7 +5,7 @@
 
   <form action="/answer" method="POST">
 
-    {% for choice in choices %}
+    {% for choice in question.choices %}
       <!-- you should have one item like this for every choice -->
       <p>
         <input
